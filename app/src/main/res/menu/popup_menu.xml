@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_themUser"
+        android:title="Them User"
+        android:icon="@drawable/ic_add_circle_outline_24"
+        />
+    <item
+        android:id="@+id/item_sua_User"
+        android:title="Sua thong tin"
+        android:icon="@drawable/ic_edit_24"
+        />
+    <item
+        android:id="@+id/item_xoa_User"
+        android:title="Xoa "
+        android:icon="@drawable/ic_delete_24"
+        />
+</menu>
