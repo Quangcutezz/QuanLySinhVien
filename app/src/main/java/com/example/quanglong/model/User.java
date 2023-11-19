@@ -15,12 +15,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, Integer age, Integer phone, String status, String role) {
+    public User(String name, Integer age, Integer phone, String status) {
         Name = name;
         Age = age;
         Phone = phone;
         this.status = status;
-        this.role = role;
     }
 
     public String getRole() {
@@ -79,7 +78,6 @@ public class User implements Serializable {
                 ", Age=" + Age +
                 ", Phone=" + Phone +
                 ", Status='" + status + '\'' +
-                ", Role=" + role + '\'' +
                 '}';
     }
 }
