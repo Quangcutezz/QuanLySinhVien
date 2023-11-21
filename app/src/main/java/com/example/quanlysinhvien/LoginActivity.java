@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Chuyển hướng dựa trên vai trò
                     switch (userRole) {
                         case "admin":
-                            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                            startActivity(new Intent(LoginActivity.this, template_admin_activity.class));
                             break;
                         case "manager":
                             startActivity(new Intent(LoginActivity.this, ManagerActivity.class));
