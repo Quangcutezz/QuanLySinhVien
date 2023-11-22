@@ -1,5 +1,6 @@
 package com.example.quanlysinhvien;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -7,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.quanglong.model.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,12 +25,16 @@ import com.example.quanlysinhvien.databinding.ActivityTemplateAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.net.Uri;
+import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import androidx.annotation.NonNull;
 import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class template_admin_activity extends AppCompatActivity {
 
@@ -36,16 +44,22 @@ public class template_admin_activity extends AppCompatActivity {
     private TextView nameAd;
     private TextView mailAd;
     private NavigationView mNavigationView;
+    private Uri imageUri;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("DBUser");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         binding = ActivityTemplateAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarTemplateAdmin.toolbar);
         initUI();
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -59,6 +73,12 @@ public class template_admin_activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         showUserInfo();
+        imageAva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              selectImage();
+            }
+        });
     }
 
     @Override
@@ -143,7 +163,56 @@ public class template_admin_activity extends AppCompatActivity {
         String email = user.getEmail();
         Uri photoUrl = user.getPhotoUrl();
         mailAd.setText(email);
-        Glide.with(this).load(photoUrl).error(R.drawable.ic_avatar_default).into(imageAva);
+//        Glide.with(this).load(photoUrl).error(R.drawable.ic_avatar_default).into(imageAva);
+        ImageHandler imageHandler = new ImageHandler();
+        myRef.child(user.getUid()).child("image").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        try {
+                            DataSnapshot dataSnapshot = task.getResult();
+                            String image = dataSnapshot.getValue().toString();
+                            imageHandler.getImage(image,imageAva);
+                            Toast.makeText(getApplicationContext(),image +"",Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),"Sai roi",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
 
+
+    }
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            imageAva.setImageURI(imageUri);
+            ImageHandler imageHandler = new ImageHandler();
+            String fileName = imageHandler.uploadImage(this, imageUri);
+
+            myRef.child(user.getUid()).child("image").setValue(fileName).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void avoid) {
+                    Toast.makeText(getApplicationContext(),"Them thanh cong !",Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(),"Them that bai! "+ e.toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }

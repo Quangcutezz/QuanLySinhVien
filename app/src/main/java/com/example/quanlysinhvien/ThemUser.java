@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class ThemUser extends AppCompatActivity {
-    private EditText nhapten,nhaptuoi,nhapdt,nhaptt;
+    private EditText nhapten,nhaptuoi,nhapdt,nhaptt,nhapanh;
     private Button back_button,cancel_button,add_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class ThemUser extends AppCompatActivity {
                 nhaptuoi.setText("");
                 nhapdt.setText("");
                 nhaptt.setText("");
+
             }
         });
         add_button.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +48,8 @@ public class ThemUser extends AppCompatActivity {
                 int tuoi = Integer.parseInt(nhaptuoi.getText().toString());
                 int sodt = Integer.parseInt(nhapdt.getText().toString());
                 String tt = nhaptt.getText().toString();
-                User user = new User(ten,tuoi,sodt,tt);
+                String anh = nhapanh.getText().toString();
+                User user = new User(ten,tuoi,sodt,tt,anh);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("DBUser");

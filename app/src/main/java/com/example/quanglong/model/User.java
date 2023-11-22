@@ -7,6 +7,7 @@ public class User implements Serializable {
     private String Name;
     private Integer Age;
     private Integer Phone;
+    public String image;
     public String status;
 
     public String role;
@@ -15,11 +16,20 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, Integer age, Integer phone, String status) {
+    public User(String name, Integer age, Integer phone, String status,String image) {
         Name = name;
         Age = age;
         Phone = phone;
         this.status = status;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getRole() {
