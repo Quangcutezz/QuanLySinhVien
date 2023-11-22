@@ -2,6 +2,8 @@ package com.example.quanlysinhvien;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -14,12 +16,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.quanlysinhvien.databinding.ActivityTemplateAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,22 +49,23 @@ public class template_admin_activity extends AppCompatActivity {
     private TextView mailAd;
     private NavigationView mNavigationView;
     private Uri imageUri;
+    private MenuItem item;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("DBUser");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Toolbar toolbar = findViewById(R.id.toolbar2);
 
         binding = ActivityTemplateAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.appBarTemplateAdmin.toolbar);
+        DrawerLayout drawer = binding.drawerLayout;
+        setSupportActionBar(binding.appBarTemplateAdmin.toolbar2);
         initUI();
 
-        DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -73,6 +78,8 @@ public class template_admin_activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         showUserInfo();
+
+
         imageAva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,19 +87,30 @@ public class template_admin_activity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.template_admin_activity, menu);
         return true;
     }
-
+    private void signOut(){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(template_admin_activity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_template_admin);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == R.id.sign_out){
+            signOut();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     private void initUI(){
         mNavigationView = binding.navView;
