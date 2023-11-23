@@ -5,12 +5,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.util.Date;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.quanglong.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
 
     private FirebaseAuth mAuth;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void loginHistory(FirebaseUser user){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference historyRef = database.getReference("DBUser");
+        //lay id
+        String id = user.getUid();
+        //lay time dang nhap hien tai
+        String loginTime = getCurrentTimeString();
 
+        //set du lieu loginHistory trong FireBase
+        historyRef.child(id).child("loginHistory").setValue(loginTime);
+    }
+    private String getCurrentTimeString(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date currentDate = new Date(System.currentTimeMillis());
+        return dateFormat.format(currentDate);
+    }
     private void loginUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -53,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Đăng nhập thành công
                         FirebaseUser user = mAuth.getCurrentUser();
                         checkUserRole(user);
+                        loginHistory(user);
                     } else {
                         // Đăng nhập thất bại
                         Toast.makeText(LoginActivity.this, "Authentication failed.",

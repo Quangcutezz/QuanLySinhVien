@@ -19,5 +19,5 @@
 
     <string name="menu_home">Admin</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_slideshow">Login History of a User</string>
 </resources>

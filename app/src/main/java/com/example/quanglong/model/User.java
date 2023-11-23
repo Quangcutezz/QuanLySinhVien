@@ -9,6 +9,7 @@ public class User implements Serializable {
     private Integer Phone;
     public String image;
     public String status;
+    private String loginHistory;
 
     public String role;
 
@@ -16,7 +17,15 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, Integer age, Integer phone, String status,String image) {
+    public String getLoginHistory() {
+        return loginHistory;
+    }
+
+    public void setLoginHistory(String loginHistory) {
+        this.loginHistory = loginHistory;
+    }
+
+    public User(String name, Integer age, Integer phone, String status, String image) {
         Name = name;
         Age = age;
         Phone = phone;

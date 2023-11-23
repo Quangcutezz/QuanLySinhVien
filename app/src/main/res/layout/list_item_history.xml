@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android" 
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
@@ -11,25 +11,19 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ten sinh vien 1"
+            android:text="Ten dang nhap"
             />
         <TextView
-            android:id="@+id/txtAge"
+            android:id="@+id/txtLoginTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tuoi"
+            android:text="Thoi gian login"
             />
         <TextView
-            android:id="@+id/txtPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="So dien thoai"
-            />
-        <TextView
-            android:id="@+id/txtStatus"
+            android:id="@+id/txtborder"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black"
