@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.employee_detail">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Name:" />
+        <EditText
+            android:id="@+id/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhap ten moi"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Age:" />
+        <EditText
+            android:id="@+id/tuoi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhap tuoi moi"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Phone:" />
+        <EditText
+            android:id="@+id/dt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhap so dien thoai moi"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Status:" />
+        <EditText
+            android:id="@+id/tt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhap trang thai moi"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_3"
+    app:startDestination="@+id/nav_home_manager">
+
+    <fragment
+        android:id="@+id/nav_home_manager"
+        android:name="com.example.quanlysinhvien.ui.home.manager_home"
+        android:label="@string/menu_home_manager"
+        tools:layout="@layout/fragment_manager_home" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.quanlysinhvien.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.quanlysinhvien.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>

@@ -125,16 +125,6 @@ public class template_admin_activity extends AppCompatActivity {
             return;
         }
         String uid = user.getUid();
-
-        //String name = user.getDisplayName();
-
-
-        /*if(name == null){
-            nameAd.setVisibility(View.GONE);
-        }else{
-            nameAd.setVisibility(View.VISIBLE);
-            nameAd.setText(name);
-        }*/
         // Thực hiện truy vấn để đọc thông tin người dùng từ Firebase Realtime Database
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("DBUser").child(uid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
