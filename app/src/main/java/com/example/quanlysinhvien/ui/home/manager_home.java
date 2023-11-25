@@ -27,10 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class manager_home extends Fragment {
-    private ListView listUser2;
-    private ArrayList<User> userArrayList;
+    private ListView listUserManager;
+    private ArrayList<User> userArrayList,temptArrayList;
     private ManagerAdapter adapter2;
     private FragmentManagerHomeBinding binding;
 
@@ -44,12 +45,30 @@ public class manager_home extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentManagerHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        listUser2 = binding.listUser2;
+        listUserManager = binding.listUser2;
         userArrayList = new ArrayList<>();
+        temptArrayList = new ArrayList<>();
         GetData();
         adapter2 = new ManagerAdapter(requireActivity(), R.layout.custom_listview_item_manager,userArrayList);
-        listUser2.setAdapter(adapter2);
+        userArrayList = temptArrayList;
+        listUserManager.setAdapter(adapter2);
+
         return root;
+    }
+    public void sortByName(){
+        Log.d("Sort", "Before Sort - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
+        adapter2.updateData(temptArrayList);
+        Log.d("Sort", "mid updateData - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
+        adapter2.sortByName();
+        Log.d("Sort", "After Sort - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
+    }
+    public void sortByStatus(){
+
+        adapter2.updateData(temptArrayList);
+        adapter2.sortByStatus();
+    }
+    public void deleteListViewData(){
+        adapter2.clear();
     }
     private void GetData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();

@@ -1,5 +1,5 @@
 package com.example.quanlysinhvien;
-
+import com.example.quanlysinhvien.ui.home.manager_home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -59,6 +59,11 @@ public class ManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null){
+            manager_home managerHome = new manager_home();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment_content_template_manager,managerHome,"manager").addToBackStack(null).commit();
+        }
         Toolbar toolbar = findViewById(R.id.toolbar3);
 
         binding = ActivityManagerBinding.inflate(getLayoutInflater());
@@ -91,7 +96,7 @@ public class ManagerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.template_admin_activity, menu);
+        getMenuInflater().inflate(R.menu.template_manager_acitivity, menu);
         return true;
     }
     private void signOut(){
@@ -106,10 +111,29 @@ public class ManagerActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    private void SortByName(){
+        manager_home managerHome = (manager_home) getSupportFragmentManager().findFragmentByTag("manager");
+        if(managerHome != null){
+            managerHome.sortByName();
+        }
+    }
+    private void SortByStatus(){
+        manager_home managerHome = (manager_home) getSupportFragmentManager().findFragmentByTag("manager");
+        if(managerHome != null){
+            managerHome.sortByStatus();
+        }
+    }
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.sign_out){
             signOut();
             return true;
+        }
+        if(item.getItemId() == R.id.sortByName){
+            SortByName();
+        }
+        if(item.getItemId() == R.id.sortByStatus){
+            //delListData();
+            SortByStatus();
         }
         return super.onOptionsItemSelected(item);
     }

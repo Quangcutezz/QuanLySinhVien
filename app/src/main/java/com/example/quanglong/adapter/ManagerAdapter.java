@@ -14,6 +14,8 @@ import android.content.Context;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +39,7 @@ public class ManagerAdapter extends ArrayAdapter<User> {
     private Activity activity;
     private int resource;
     @NonNull
+    private List<User> userList;
     private List<User> object;
     public ManagerAdapter(@NonNull Activity activity,int resource,@NonNull List<User> object){
         super(activity,resource,object);
@@ -118,5 +121,49 @@ public class ManagerAdapter extends ArrayAdapter<User> {
             }
         });
         return view;
+    }
+
+    public void updateData(List<User> newData){
+        if(newData != null && !newData.isEmpty()) {
+            Log.d("MyAdapter", "Số lượng phần tử trong newData: " + newData.size());
+            //object.clear();
+            object.addAll(newData);
+
+            userList = new ArrayList<>(newData);
+        Log.d("MyAdapter", "Dữ liệu sau khi update: " + object.toString());
+        notifyDataSetChanged();}
+         else {
+            // In ra thông báo nếu newData rỗng hoặc null
+            Log.d("MyAdapter", "Dữ liệu mới là null hoặc rỗng.");
+        }
+    }
+
+    //Sap xep theo ten (name)
+    public void sortByName(){
+        Collections.sort(object, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    //Sap xep theo trang thai (status), Normal len tren, Locked xuong duoi
+    public void sortByStatus(){
+        Collections.sort(object, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if("Normal".equals(o1.getStatus()) && "Locked".equals(o2.getStatus())) {
+                    return -1;
+                }else if ("Locked".equals(o1.getStatus()) && "Normal".equals(o2.getStatus())){
+                    return 1;
+                }else {
+                    //Neu ca hai deu la Normal thi sap xep theo ten
+                    return o1.getName().compareToIgnoreCase(o2.getName());
+                }
+            }
+        });
+        notifyDataSetChanged();
     }
 }

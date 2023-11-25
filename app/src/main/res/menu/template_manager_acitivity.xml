@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_add_circle_outline_24"
+        android:id="@+id/sortByName"
+        android:orderInCategory="100"
+        android:title="Sort By Name"
+        app:showAsAction="never" />
+    <item
+        android:icon="@drawable/ic_add_circle_outline_24"
+        android:id="@+id/sortByStatus"
+        android:orderInCategory="100"
+        android:title="Sort By Status"
+        app:showAsAction="never" />
+
     <item
         android:icon="@drawable/ic_add_circle_outline_24"
         android:id="@+id/sign_out"
         android:orderInCategory="100"
         android:title="Sign Out"
         app:showAsAction="never" />
+
 
 </menu>
