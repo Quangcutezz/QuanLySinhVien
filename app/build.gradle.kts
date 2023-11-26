@@ -56,4 +56,5 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     //load image from URL
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 }

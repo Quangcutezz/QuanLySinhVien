@@ -39,7 +39,6 @@ public class ManagerAdapter extends ArrayAdapter<User> {
     private Activity activity;
     private int resource;
     @NonNull
-    private List<User> userList;
     private List<User> object;
     public ManagerAdapter(@NonNull Activity activity,int resource,@NonNull List<User> object){
         super(activity,resource,object);
@@ -123,20 +122,73 @@ public class ManagerAdapter extends ArrayAdapter<User> {
         return view;
     }
 
-    public void updateData(List<User> newData){
-        if(newData != null && !newData.isEmpty()) {
-            Log.d("MyAdapter", "Số lượng phần tử trong newData: " + newData.size());
-            //object.clear();
-            object.addAll(newData);
+    // Phương thức tìm kiếm theo tên, status và tuổi
+    public void filterData(String query) {
+        // Tạo danh sách tạm thời để lưu trữ kết quả lọc
+        ArrayList<User> filteredList = new ArrayList<>();
 
-            userList = new ArrayList<>(newData);
-        Log.d("MyAdapter", "Dữ liệu sau khi update: " + object.toString());
-        notifyDataSetChanged();}
-         else {
-            // In ra thông báo nếu newData rỗng hoặc null
-            Log.d("MyAdapter", "Dữ liệu mới là null hoặc rỗng.");
+        // Thực hiện lọc dữ liệu dựa trên query và thêm vào filteredList
+        for (User user : object) {
+            if (user.getName().toLowerCase().contains(query.toLowerCase()) ||
+                    String.valueOf(user.getAge()).toLowerCase().contains(query.toLowerCase()) ||
+                    user.getStatus().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(user);
+            }
         }
+
+        // Xóa sạch dữ liệu hiện tại và thêm vào dữ liệu đã lọc
+        this.clear();
+        this.addAll(filteredList);
+
+        // Thông báo cho adapter rằng dữ liệu đã thay đổi
+        this.notifyDataSetChanged();
     }
+
+    // Tìm kiếm theo tên
+//    public void searchByName(String query) {
+//        query = query.toLowerCase();
+//        ArrayList<User> filteredList = new ArrayList<>();
+//
+//        for (User user : object) {
+//            if (user.getName().toLowerCase().contains(query)) {
+//                filteredList.add(user);
+//            }
+//        }
+//
+//        this.clear();
+//        this.addAll(filteredList);
+//        notifyDataSetChanged();
+//    }
+
+//    // Tìm kiếm theo status
+//    public void searchByStatus(String query) {
+//        query = query.toLowerCase();
+//        ArrayList<User> filteredList = new ArrayList<>();
+//
+//        for (User user : object) {
+//            if (user.getStatus().toLowerCase().contains(query)) {
+//                filteredList.add(user);
+//            }
+//        }
+//
+//        this.clear();
+//        this.addAll(filteredList);
+//        notifyDataSetChanged();
+//    }
+//
+//    // Tìm kiếm theo tuổi
+//    public void searchByAge(int age) {
+//        ArrayList<User> filteredList = new ArrayList<>();
+//
+//        for (User user : object) {
+//            if (user.getAge() == age) {
+//                filteredList.add(user);
+//            }
+//        }
+//        object.clear();
+//        object.addAll(filteredList);
+//        notifyDataSetChanged();
+//    }
 
     //Sap xep theo ten (name)
     public void sortByName(){

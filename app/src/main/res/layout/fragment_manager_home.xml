@@ -7,27 +7,38 @@
     android:background="@color/white"
     tools:context=".ui.home.manager_home">
 
+    <android.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryHint="Search Student"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <SearchView
-                android:layout_width="409dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <ListView
                 android:id="@+id/listUser2"
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="NestedScrolling" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,23 +49,18 @@
                     android:id="@+id/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="3dp"
                     android:layout_gravity="left"
-                    android:text="Sort by name"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/listUser2" />
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Sort by name" />
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="0dp"
-                    android:layout_marginStart="60dp"
-                    android:layout_gravity="right"
-                    android:text="Sort by Status"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/listUser2" />
+                    android:text="Sort by Status" />
             </LinearLayout>
 
 
