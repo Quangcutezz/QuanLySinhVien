@@ -2,6 +2,7 @@ package com.example.quanlysinhvien;
 import com.example.quanlysinhvien.ui.home.manager_home;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DatabaseError;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
+import androidx.fragment.app.FragmentManager;
 public class ManagerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -55,16 +56,10 @@ public class ManagerActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("DBUser");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null){
-            manager_home managerHome = new manager_home();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment_content_template_manager,managerHome,"manager").addToBackStack(null).commit();
-        }
-        Toolbar toolbar = findViewById(R.id.toolbar3);
+
 
         binding = ActivityManagerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -76,7 +71,7 @@ public class ManagerActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home_manager, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home_manager, R.id.nav_search_manager)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_template_manager);
@@ -93,6 +88,7 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -111,29 +107,11 @@ public class ManagerActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    private void SortByName(){
-        manager_home managerHome = (manager_home) getSupportFragmentManager().findFragmentByTag("manager");
-        if(managerHome != null){
-            managerHome.sortByName();
-        }
-    }
-    private void SortByStatus(){
-        manager_home managerHome = (manager_home) getSupportFragmentManager().findFragmentByTag("manager");
-        if(managerHome != null){
-            managerHome.sortByStatus();
-        }
-    }
+
     public boolean onOptionsItemSelected(MenuItem item){
-        if (item.getItemId() == R.id.sign_out){
+        if (item.getItemId() == R.id.sign_out) {
             signOut();
             return true;
-        }
-        if(item.getItemId() == R.id.sortByName){
-            SortByName();
-        }
-        if(item.getItemId() == R.id.sortByStatus){
-            //delListData();
-            SortByStatus();
         }
         return super.onOptionsItemSelected(item);
     }

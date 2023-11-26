@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,44 +34,43 @@ public class manager_home extends Fragment {
     private ListView listUserManager;
     private ArrayList<User> userArrayList,temptArrayList;
     private ManagerAdapter adapter2;
+    private ManagerAdapter adapter3;
     private FragmentManagerHomeBinding binding;
 
-
-    public static manager_home newInstance() {
-        return new manager_home();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentManagerHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        Button btnSortByName = binding.button;
+        Button btnSortByStatus = binding.button2;
         listUserManager = binding.listUser2;
         userArrayList = new ArrayList<>();
         temptArrayList = new ArrayList<>();
         GetData();
         adapter2 = new ManagerAdapter(requireActivity(), R.layout.custom_listview_item_manager,userArrayList);
+        //adapter3 = new ManagerAdapter(requireActivity(), R.layout.custom_listview_item_manager,userArrayList);
         userArrayList = temptArrayList;
         listUserManager.setAdapter(adapter2);
-
+        btnSortByName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter2.sortByName();
+                adapter2.notifyDataSetChanged();
+            }
+        });
+        btnSortByStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter2.sortByStatus();
+                adapter2.notifyDataSetChanged();
+            }
+        });
         return root;
     }
-    public void sortByName(){
-        Log.d("Sort", "Before Sort - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
-        adapter2.updateData(temptArrayList);
-        Log.d("Sort", "mid updateData - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
-        adapter2.sortByName();
-        Log.d("Sort", "After Sort - userArrayList: " + userArrayList.toString() + ", originalList: " + userArrayList.toString());
-    }
-    public void sortByStatus(){
 
-        adapter2.updateData(temptArrayList);
-        adapter2.sortByStatus();
-    }
-    public void deleteListViewData(){
-        adapter2.clear();
-    }
-    private void GetData(){
+    public void GetData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("DBUser");
         myRef.addValueEventListener(new ValueEventListener() {
